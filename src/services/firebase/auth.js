@@ -146,16 +146,17 @@ function getAuthErrorMessage(errorCode) {
     "auth/email-already-in-use": "An account with this email already exists.",
     "auth/weak-password": "Password should be at least 6 characters long.",
     "auth/invalid-email": "Please enter a valid email address.",
-    "auth/too-many-requests":
-      "Too many failed attempts. Please try again later.",
-    "auth/network-request-failed":
-      "Network error. Please check your connection.",
-    "auth/requires-recent-login":
-      "Please logout and login again to perform this action.",
+    "auth/too-many-requests": "Too many failed attempts. Please try again later.",
+    "auth/network-request-failed": "Network error. Please check your connection.",
+    "auth/requires-recent-login": "Please logout and login again to perform this action.",
+    "auth/api-key-not-valid": "Firebase API key is not valid. Please check your configuration.",
+    "auth/invalid-api-key": "Firebase API key is invalid. Please check your configuration.",
+    "auth/app-not-authorized": "This domain is not authorized. Please add it to Firebase authorized domains.",
+    "auth/unauthorized-domain": "This domain is not authorized for OAuth operations."
   };
 
   return (
     errorMessages[errorCode] ||
-    "An unexpected error occurred. Please try again."
+    `Authentication error: ${errorCode}. Please check your Firebase configuration.`
   );
 }

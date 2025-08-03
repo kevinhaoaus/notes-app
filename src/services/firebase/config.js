@@ -14,6 +14,17 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
+// Validate Firebase configuration in development
+if (process.env.NODE_ENV === 'development') {
+  const missingKeys = Object.entries(firebaseConfig)
+    .filter(([key, value]) => !value)
+    .map(([key]) => key);
+  
+  if (missingKeys.length > 0) {
+    console.error('Missing Firebase environment variables:', missingKeys);
+  }
+}
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
