@@ -14,16 +14,23 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-// Validate Firebase configuration in development
-if (process.env.NODE_ENV === 'development') {
-  const missingKeys = Object.entries(firebaseConfig)
-    .filter(([key, value]) => !value)
-    .map(([key]) => key);
-  
-  if (missingKeys.length > 0) {
-    console.error('Missing Firebase environment variables:', missingKeys);
-  }
+// Validate Firebase configuration
+const missingKeys = Object.entries(firebaseConfig)
+  .filter(([key, value]) => !value)
+  .map(([key]) => key);
+
+if (missingKeys.length > 0) {
+  console.error('Missing Firebase environment variables:', missingKeys);
+  console.log('Available env vars:', Object.keys(process.env).filter(key => key.startsWith('NEXT_PUBLIC_FIREBASE')));
 }
+
+// Log config status (remove sensitive info)
+console.log('Firebase config status:', {
+  apiKeyPresent: !!firebaseConfig.apiKey,
+  authDomain: firebaseConfig.authDomain,
+  projectId: firebaseConfig.projectId,
+  nodeEnv: process.env.NODE_ENV
+});
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
