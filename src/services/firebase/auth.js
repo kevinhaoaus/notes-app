@@ -62,14 +62,6 @@ export async function registerUser(email, password, displayName) {
 // Login user
 export async function loginUser(email, password) {
   try {
-    // Log the attempt for debugging (remove in production)
-    console.log('Attempting login with:', { email, passwordLength: password?.length });
-    console.log('Auth config:', {
-      apiKey: auth.app.options.apiKey?.substring(0, 10) + '...',
-      authDomain: auth.app.options.authDomain,
-      projectId: auth.app.options.projectId
-    });
-
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
@@ -87,11 +79,7 @@ export async function loginUser(email, password) {
       },
     };
   } catch (error) {
-    console.error('Login error details:', {
-      code: error.code,
-      message: error.message,
-      customData: error.customData
-    });
+    console.error('Login failed:', error.code);
     
     return {
       success: false,
@@ -157,6 +145,7 @@ function getAuthErrorMessage(errorCode) {
   const errorMessages = {
     "auth/user-not-found": "No account found with this email address.",
     "auth/wrong-password": "Incorrect password. Please try again.",
+    "auth/invalid-credential": "Invalid email or password. Please check your credentials and try again.",
     "auth/email-already-in-use": "An account with this email already exists.",
     "auth/weak-password": "Password should be at least 6 characters long.",
     "auth/invalid-email": "Please enter a valid email address.",
